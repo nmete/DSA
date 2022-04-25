@@ -1,97 +1,56 @@
 #include<iostream>
 using namespace std;
 
-struct Node{
-   int data;
-   Node *left;
-   Node *right;
+class node
+{
+public:
+	int data;
+	node *left;
+	node *right;
 
-   Node(int d)
-   {
-	   data = d;
-	   left=right=NULL;
-   }   
+	node(int d){
+		data = d;
+		left =NULL;
+		right= NULL;
+	}
+
 };
 
-Node * build()
-{     
-	  int num;
-	  cin>>num;
+node *buildTree(node *root)
+{
+	int d;
+	cin>>d;
 
-	if(num==-1)
+	if(d == -1)
 	{
 		return NULL;
 	}
 
+	root = new node(d);
+	root->left =buildTree(root->left);
+	root->right =buildTree(root->right);
 
-
-      Node *root= new Node(num);
-      root->left = build();
-      root->right = build();
-
-      return root;
+	return root;
 }
 
-void inorder(Node *root)
+void print(node *root)
 {
+    if(root == NULL)
+    {
+    	return;
+    }
 
-	 // time complexity :O(n)
-	// space complecity :O(h)
-     if(root == NULL)
-     {
-     	return;
-     }
-     inorder(root->left);
-     cout<<root->data<<" ";
-     inorder(root->right);
-
+    cout<<root->data<<" ";
+    print(root->left);
+    print(root->right);
 }
 
-void preorder(Node *root)
-{
-
-
-	 // time complexity :O(n)
-	// space complNecity :O(h) 
-
-
-     if(root == NULL)
-     {
-     	return;
-     }
-          cout<<root->data<<" ";
-     preorder(root->left);
-     preorder(root->right);
-
-}
-
-void postorder(Node *root)
-{
-
-	// time complexity :O(n)
-	// space complecity :O(h)  
-
-
-     if(root == NULL)
-     {
-     	return;
-     }
-     postorder(root->left);
-     postorder(root->right);
-     cout<<root->data<<" ";
-
-}
 int main()
 {
-    Node *root;
-    root = build();
 
-    inorder(root);
-    cout<<endl;
-    preorder(root);
-    cout<<endl;
-    postorder(root);
+    node *root;
 
+    root = buildTree(root);
+    print(root);
 	return 0;
 }
-
